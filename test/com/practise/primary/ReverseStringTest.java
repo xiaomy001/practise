@@ -1,34 +1,44 @@
 package com.practise.primary;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertArrayEquals;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-class ReverseStringTest {
+@RunWith(value = Parameterized.class)
+public class ReverseStringTest {
 	
 	private ReverseString reverseString;
 
-	@BeforeEach
-	void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		reverseString = new ReverseString();
 	}
+	
+	@Parameterized.Parameter(value = 0)
+	public char[] s;
+	
+	@Parameterized.Parameter(value = 1)
+	public char[] result;
 
-	@ParameterizedTest
-	@MethodSource
-	void testReverseString(char[] s, char[] result) {
+	@Test
+	public void testReverseString() {
 		reverseString.execute(s);
-		assertEquals(s, result);
+		assertArrayEquals(s, result);
 	}
 	
-	static List<Arguments> testReverseString() {
-		return List.of(
-				Arguments.of(new char[] {'h','e','l','l','o'}, new char[] {'o','l','l','e','h'}), 
-				Arguments.of(new char[] {'H','a','n','n','a','h'}, new char[] {'h','a','n','n','a','H'}));
+	@Parameters
+	public static Collection<Object[]> data() {
+		return Arrays.asList(new Object[][] { 
+				{new char[] {'h','e','l','l','o'}, new char[] {'o','l','l','e','h'}}, 
+				{new char[] {'H','a','n','n','a','h'}, new char[] {'h','a','n','n','a','H'}}
+		});
 	}
 
 }

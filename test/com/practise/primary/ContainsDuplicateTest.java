@@ -1,34 +1,44 @@
 package com.practise.primary;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-class ContainsDuplicateTest {
+@RunWith(value = Parameterized.class)
+public class ContainsDuplicateTest {
 	
 	private ContainsDuplicate containsDuplicate;
 
-	@BeforeEach
-	void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		containsDuplicate = new ContainsDuplicate();
 	}
+	
+	@Parameterized.Parameter(value = 0)
+	public int[] nums;
+	
+	@Parameterized.Parameter(value = 1)
+	public boolean result;
 
-	@ParameterizedTest
-	@MethodSource
-	void testContainsDuplicate(int[] nums, boolean result) {
+	@Test
+	public void testContainsDuplicate() {
 		assertEquals(containsDuplicate.execute(nums), result);
 	}
 	
-	static List<Arguments> testContainsDuplicate() {
-		return List.of(
-				Arguments.of(new int[] {1,2,3,1}, true), 
-				Arguments.of(new int[] {1,2,3,4}, false), 
-				Arguments.of(new int[] {1,1,1,3,3,4,3,2,4,2}, true));
+	@Parameters
+	public static Collection<Object[]> data() {
+		return Arrays.asList(new Object[][] {
+				{new int[] {1,2,3,1}, true}, 
+				{new int[] {1,2,3,4}, false},
+				{new int[] {1,1,1,3,3,4,3,2,4,2}, true}
+		});
 	}
 
 }

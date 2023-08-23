@@ -1,33 +1,43 @@
 package com.practise.primary;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-class HappyNumberTest {
+@RunWith(value = Parameterized.class)
+public class HappyNumberTest {
 	
 	private HappyNumber happyNumber;
 
-	@BeforeEach
-	void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		happyNumber = new HappyNumber();
 	}
+	
+	@Parameterized.Parameter(value = 0)
+	public int n;
+	
+	@Parameterized.Parameter(value = 1)
+	public boolean result;
 
-	@ParameterizedTest
-	@MethodSource
-	void testIsHappy(int n, boolean result) {
+	@Test
+	public void testIsHappy() {
 		assertEquals(happyNumber.isHappy(n), result);
 	}
 	
-	static List<Arguments> testIsHappy() {
-		return List.of(
-				Arguments.of(19, true), 
-				Arguments.of(2, false));
+	@Parameters
+	public static Collection<Object[]> data() {
+		return Arrays.asList(new Object[][] {
+				{19, true}, 
+				{2, false}
+		});
 	}
 
 }

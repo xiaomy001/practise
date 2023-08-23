@@ -1,34 +1,44 @@
 package com.practise.primary;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-class PalindromeNumberTest {
+@RunWith(value = Parameterized.class)
+public class PalindromeNumberTest {
 	
 	private PalindromeNumber palindromeNumber;
 
-	@BeforeEach
-	void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		palindromeNumber = new PalindromeNumber();
 	}
+	
+	@Parameterized.Parameter(value = 0)
+	public int x;
+	
+	@Parameterized.Parameter(value = 1)
+	public boolean result;
 
-	@ParameterizedTest
-	@MethodSource
-	void testIsPalindrome(int x, boolean result) {
+	@Test
+	public void testIsPalindrome() {
 		assertEquals(palindromeNumber.isPalindrome(x), result);
 	}
 	
-	static List<Arguments> testIsPalindrome() {
-		return List.of(
-				Arguments.of(121, true), 
-				Arguments.of(-121, false), 
-				Arguments.of(10, false));
+	@Parameters
+	public static Collection<Object[]> data() {
+		return Arrays.asList(new Object[][] {
+				{121, true}, 
+				{-121, false}, 
+				{10, false}
+		});
 	}
 
 }

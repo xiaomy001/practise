@@ -1,34 +1,44 @@
 package com.practise.primary;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-class SingleNumberTest {
+@RunWith(value = Parameterized.class)
+public class SingleNumberTest {
 	
 	private SingleNumber singleNumber;
 
-	@BeforeEach
-	void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		singleNumber = new SingleNumber();
 	}
+	
+	@Parameterized.Parameter(value = 0)
+	public int[] nums;
+	
+	@Parameterized.Parameter(value = 1)
+	public int result;
 
-	@ParameterizedTest
-	@MethodSource
-	void testSingleNumber(int[] nums, int result) {
+	@Test
+	public void testSingleNumber() {
 		assertEquals(singleNumber.find(nums), result);
 	}
 	
-	static List<Arguments> testSingleNumber() {
-		return List.of(
-				Arguments.of(new int[] {2,2,1}, 1), 
-				Arguments.of(new int[] {4,1,2,1,2}, 4), 
-				Arguments.of(new int[] {1}, 1));
+	@Parameters
+	public static Collection<Object[]> data() {
+		return Arrays.asList(new Object[][] {
+				{new int[] {2,2,1}, 1}, 
+				{new int[] {4,1,2,1,2}, 4}, 
+				{new int[] {1}, 1}
+		});
 	}
 
 }

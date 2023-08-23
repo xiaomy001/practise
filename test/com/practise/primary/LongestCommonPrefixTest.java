@@ -1,33 +1,43 @@
 package com.practise.primary;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-class LongestCommonPrefixTest {
+@RunWith(value = Parameterized.class)
+public class LongestCommonPrefixTest {
 	
 	private LongestCommonPrefix longestCommonPrefix;
 
-	@BeforeEach
-	void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		longestCommonPrefix = new LongestCommonPrefix();
 	}
+	
+	@Parameterized.Parameter(value = 0)
+	public String[] strs;
+	
+	@Parameterized.Parameter(value = 1)
+	public String result;
 
-	@ParameterizedTest
-	@MethodSource
-	void testFind(String[] strs, String result) {
+	@Test
+	public void testFind() {
 		assertEquals(longestCommonPrefix.find(strs), result);
 	}
 	
-	static List<Arguments> testFind() {
-		return List.of(
-				Arguments.of(new String[] {"flower","flow","flight"}, "fl"), 
-				Arguments.of(new String[] {"dog","racecar","car"}, ""));
+	@Parameters
+	public static Collection<Object[]> data() {
+		return Arrays.asList(new Object[][] {
+				{new String[] {"flower","flow","flight"}, "fl"}, 
+				{new String[] {"dog","racecar","car"}, ""}
+		});
 	}
 
 }

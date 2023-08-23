@@ -1,34 +1,44 @@
 package com.practise.primary;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-class RomanToIntegerTest {
+@RunWith(value = Parameterized.class)
+public class RomanToIntegerTest {
 
 	private RomanToInteger romanToInteger;
 	
-	@BeforeEach
-	void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		romanToInteger = new RomanToInteger();
 	}
+	
+	@Parameterized.Parameter(value = 0)
+	public String s;
+	
+	@Parameterized.Parameter(value = 1)
+	public int result;
 
-	@ParameterizedTest
-	@MethodSource
-	void testRomanToInteger(String s, int result) {
+	@Test
+	public void testRomanToInteger() {
 		assertEquals(romanToInteger.execute(s), result);
 	}
 	
-	static List<Arguments> testRomanToInteger() {
-		return List.of(
-				Arguments.of("III", 3), 
-				Arguments.of("LVIII", 58), 
-				Arguments.of("MCMXCIV", 1994));
+	@Parameters
+	public static Collection<Object[]> data() {
+		return Arrays.asList(new Object[][] {
+				{"III", 3}, 
+				{"LVIII", 58}, 
+				{"MCMXCIV", 1994}
+		});
 	}
 
 }

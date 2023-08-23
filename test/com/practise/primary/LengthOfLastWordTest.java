@@ -1,34 +1,44 @@
 package com.practise.primary;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-class LengthOfLastWordTest {
+@RunWith(value = Parameterized.class)
+public class LengthOfLastWordTest {
 	
 	private LengthOfLastWord lengthOfLastWord;
 
-	@BeforeEach
-	void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		lengthOfLastWord = new LengthOfLastWord();
 	}
+	
+	@Parameterized.Parameter(value = 0)
+	public String s;
+	
+	@Parameterized.Parameter(value = 1)
+	public int result;
 
-	@ParameterizedTest
-	@MethodSource
-	void testLengthOfLastWord(String s, int result) {
+	@Test
+	public void testLengthOfLastWord() {
 		assertEquals(lengthOfLastWord.execute(s), result);
 	}
 	
-	static List<Arguments> testLengthOfLastWord() {
-		return List.of(
-				Arguments.of("Hello World", 5), 
-				Arguments.of("   fly me   to   the moon  ", 4), 
-				Arguments.of("luffy is still joyboy", 6));
+	@Parameters
+	public static Collection<Object[]> data() {
+		return Arrays.asList(new Object[][] {
+				{"Hello World", 5}, 
+				{"   fly me   to   the moon  ", 4}, 
+				{"luffy is still joyboy", 6}
+		});
 	}
 
 }

@@ -1,33 +1,46 @@
 package com.practise.primary;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-class AddBinaryTest {
+@RunWith(value = Parameterized.class)
+public class AddBinaryTest {
 	
 	private AddBinary addBinary;
 
-	@BeforeEach
-	void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		addBinary = new AddBinary();
 	}
+	
+	@Parameterized.Parameter(value = 0)
+	public String a;
+	
+	@Parameterized.Parameter(value = 1)
+	public String b;
+	
+	@Parameterized.Parameter(value = 2)
+	public String result;
 
-	@ParameterizedTest
-	@MethodSource
-	void testAddBinary(String a, String b, String result) {
+	@Test
+	public void testAddBinary() {
 		assertEquals(addBinary.execute(a, b), result);
 	}
 	
-	static List<Arguments> testAddBinary() {
-		return List.of(
-				Arguments.of("11", "1", "100"), 
-				Arguments.of("1010", "1011", "10101"));
+	@Parameters
+	public static Collection<Object[]> data() {
+		return Arrays.asList(new Object[][] {
+				{"11", "1", "100"}, 
+				{"1010", "1011", "10101"}
+		});
 	}
 
 }

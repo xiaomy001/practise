@@ -1,33 +1,43 @@
 package com.practise.primary;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-class BestTimeToBuyAndSellStockTest {
+@RunWith(value = Parameterized.class)
+public class BestTimeToBuyAndSellStockTest {
 	
 	private BestTimeToBuyAndSellStock bestTimeToBuyAndSellStock;
 
-	@BeforeEach
-	void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		bestTimeToBuyAndSellStock = new BestTimeToBuyAndSellStock();
 	}
+	
+	@Parameterized.Parameter(value = 0)
+	public int[] prices;
+	
+	@Parameterized.Parameter(value = 1)
+	public int result;
 
-	@ParameterizedTest
-	@MethodSource
-	void testCalculateMaxProfit(int[] prices, int result) {
+	@Test
+	public void testCalculateMaxProfit() {
 		assertEquals(bestTimeToBuyAndSellStock.calculateMaxProfit(prices), result);
 	}
 	
-	static List<Arguments> testCalculateMaxProfit() {
-		return List.of(
-				Arguments.of(new int[] {7,1,5,3,6,4}, 5), 
-				Arguments.of(new int[] {7,6,4,3,1}, 0));
+	@Parameters
+	public static Collection<Object[]> data() {
+		return Arrays.asList(new Object[][] {
+				{new int[] {7,1,5,3,6,4}, 5}, 
+				{new int[] {7,6,4,3,1}, 0}
+		});
 	}
 
 }

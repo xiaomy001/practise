@@ -1,33 +1,43 @@
 package com.practise.primary;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-class LongestPalindromeTest {
+@RunWith(value = Parameterized.class)
+public class LongestPalindromeTest {
 	
 	private LongestPalindrome longestPalindrome;
 
-	@BeforeEach
-	void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		longestPalindrome = new LongestPalindrome();
 	}
+	
+	@Parameterized.Parameter(value = 0)
+	public String s;
+	
+	@Parameterized.Parameter(value = 1)
+	public int result;
 
-	@ParameterizedTest
-	@MethodSource
-	void testFindLongestPalindrome(String s, int result) {
+	@Test
+	public void testFindLongestPalindrome() {
 		assertEquals(longestPalindrome.find(s), result);
 	}
 	
-	static List<Arguments> testFindLongestPalindrome() {
-		return List.of(
-				Arguments.of("abccccdd", 7), 
-				Arguments.of("a", 1));
+	@Parameters
+	public static Collection<Object[]> data() {
+		return Arrays.asList(new Object[][] {
+				{"abccccdd", 7}, 
+				{"a", 1}
+		});
 	}
 
 }
